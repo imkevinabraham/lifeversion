@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="auto">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Life Version">
+		<meta name="author" content="Kevin">
+		<title>Life Version - Kevin Abraham</title>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+		<link rel="icon" type="image/png" href="https://img.icons8.com/3d-fluency/16/grave.png">
+		<style>
+			#nprogress .bar {
+				background: #DC4245;
+			}
+		</style>
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+		<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+			<header class="mb-auto">
+				<div>
+					<h3 class="float-md-middle mb-0">Life Version</h3>
+				</div>
+			</header>
+			<main class="px-3">
+				<div class="px-4 py-5 my-5 text-center">
+					<h3 class="display-5 fw-bold text-white">You are <u id="years-completed" class="counter">
+							<div class="spinner-grow text-danger" role="status"><span class="visually-hidden">Loading...</span></div>
+						</u><u> years</u> old today </h3>
+					<h3 class="display-5 fw-bold text-white">Thats <u id="percentage-completed" class="counter text-warning">
+							<div class="spinner-grow text-danger" role="status"><span class="visually-hidden">Loading...</span></div>
+						</u><u class="text-warning">%</u> of the way through your life </h3>
+					<h3 class="display-5 fw-bold text-white">You have <u class="counter text-danger" id="years-remaining">
+							<div class="spinner-grow text-danger" role="status"><span class="visually-hidden">Loading...</span></div>
+						</u><u class="text-danger"> years</u> remaining </h3>
+					<h5 class="display-5 fw-bold text-white">Building version <u id="version" class="text-success counter">
+							<div class="spinner-grow text-danger" role="status"><span class="visually-hidden">Loading...</span></div>
+						</u> today </h5>
+				</div>
+			</main>
+			<footer class="mt-auto text-white-50">
+				<figure>
+					<blockquote class="blockquote" id="quote-text">
+						<p class="placeholder-glow"><span class="placeholder col-4"></span></p>
+					</blockquote>
+					<figcaption class="blockquote-footer"><cite title="Source Title" id="quote-author">
+							<p class="placeholder-glow"><span class="placeholder col-2"></span></p>
+						</cite></figcaption>
+				</figure>
+			</footer>
+		</div>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script> -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+		<script type="text/javascript">
+			const years_to_live = 84;
+			var start = moment('1992-12-04', 'YYYY-MM-DD'); // correct
+			var end = start.clone().add(years_to_live, 'years'); // Friday, 4 December 2076
+			var today = moment();
+			var total_days = end.diff(start, 'days'); // correct
+			var completed_days = today.diff(start, 'days', true);
+			var remaining_days = end.diff(today, 'days', true);
+			var total_years = end.diff(start, 'years'); // correct
+			var completed_years = today.diff(start, 'years', true);
+			var remaining_years = end.diff(today, 'years', true);
+			var percentage_completed = (completed_days / total_days) * 100;
+			var version = Math.round((completed_days + Number.EPSILON) * 100) / 100;
+			$("#years-completed").empty().append(completed_years);
+			$("#percentage-completed").empty().append(percentage_completed);
+			$("#years-remaining").empty().append(remaining_years);
+			$("#version").empty().append(version);
+			const quotes_array = [{
+				"author": "Charlie Munger",
+				"quote": "To get what you want, you have to deserve what you want. The world is not yet a crazy enough place to reward a whole bunch of undeserving people."
+			}, {
+				"author": "Charlie Munger",
+				"quote": "You don't have to be brilliant, only a little bit wiser than the other guys, on average, for a long, long time."
+			}, {
+				"author": "Charlie Munger",
+				"quote": "The big money is not in the buying and selling, but in the waiting."
+			}, {
+				"author": "Charlie Munger",
+				"quote": "People calculate too much and think too little."
+			}, {
+				"author": "Charlie Munger",
+				"quote": "Recognize reality even when you don't like it – especially when you don't like it."
+			}, {
+				"author": "Naval",
+				"quote": "A fit body, a calm mind, a house full of love. These things cannot be bought — they must be earned."
+			}, {
+				"author": "Naval",
+				"quote": "If you’re more passionate about founding a business than the business itself, you can fall into a ten year trap. Better to stay emotionally unattached and select the best opportunity that arises. Applies to relationships too."
+			}, {
+				"author": "Naval",
+				"quote": "Smart money is just dumb money that’s been through a crash."
+			}, {
+				"author": "Naval",
+				"quote": "Don’t debate people in the media when you can debate them in the marketplace."
+			}, {
+				"author": "Naval",
+				"quote": "Branding requires accountability. To build a great personal brand (an eponymous one), you must take on the risk of being publicly wrong."
+			}, {
+				"author": "Naval",
+				"quote": "You make your own luck if you stay at it long enough."
+			}, {
+				"author": "Naval",
+				"quote": "Seek wealth, not money or status. Wealth is having assets that earn while you sleep. Money is how we transfer time and wealth. Status is your place in the social hierarchy."
+			}, {
+				"author": "Naval",
+				"quote": "Ignore people playing status games. They gain status by attacking people playing wealth creation games."
+			}, {
+				"author": "Naval",
+				"quote": "You’re not going to get rich renting out your time. You must own equity - a piece of a business - to gain your financial freedom."
+			}, {
+				"author": "Naval",
+				"quote": "The Internet has massively broadened the possible space of careers. Most people haven't figured this out yet."
+			}, {
+				"author": "Naval",
+				"quote": "Play iterated games. All the returns in life, whether in wealth, relationships, or knowledge, come from compound interest."
+			}, {
+				"author": "Naval",
+				"quote": "Pick business partners with high intelligence, energy, and, above all, integrity."
+			}, {
+				"author": "Naval",
+				"quote": "Don't partner with cynics and pessimists. Their beliefs are self-fulfilling."
+			}, {
+				"author": "Naval",
+				"quote": "Learn to sell. Learn to build. If you can do both, you will be unstoppable."
+			}, {
+				"author": "Naval",
+				"quote": "Specific knowledge is found by pursuing your genuine curiosity and passion rather than whatever is hot right now."
+			}, {
+				"author": "Naval",
+				"quote": "Building specific knowledge will feel like play to you but will look like work to others."
+			}, {
+				"author": "Archimedes",
+				"quote": "Give me a lever long enough, and a place to stand, and I will move the earth."
+			}, {
+				"author": "Naval",
+				"quote": "Fortunes require leverage. Business leverage comes from capital, people, and products with no marginal cost of replication (code and media)."
+			}, {
+				"author": "Naval",
+				"quote": "Code and media are permissionless leverage. They're the leverage behind the newly rich. You can create software and media that works for you while you sleep."
+			}, {
+				"author": "Naval",
+				"quote": "The only true test of intelligence is if you get what you want out of life."
+			}, {
+				"author": "Naval",
+				"quote": "Specialisation is for insects. I don't believe in this model of trying to focus your life down one thing. You've got one life just do everything you want."
+			}, {
+				"author": "Naval",
+				"quote": "Escape competition through authenticity"
+			}, {
+				"author": "Jason Fried",
+				"quote": "If no one’s upset by what you’re saying, you’re probably not pushing hard enough. (And you’re probably boring, too.)"
+			}, {
+				"author": "Jason Fried",
+				"quote": "Any conversation with more than three people is typically a conversation with too many people."
+			}, {
+				"author": "Jason Fried",
+				"quote": "WE ALL HAVE ideas. Ideas are immortal. They last forever. What doesn’t last forever is inspiration. Inspiration is like fresh fruit or milk: It has an expiration date."
+			}, {
+				"author": "Jason Fried",
+				"quote": "A business without a path to profit isn't a business, it's a hobby."
+			}, {
+				"author": "Jason Fried",
+				"quote": "Don’t make up problems you don’t have yet. It’s not a problem until it’s a real problem. Most of the things you worry about never happen anyway."
+			}, {
+				"author": "Jason Fried",
+				"quote": "Obscurity is a good thing. You can fail in obscurity. It removes the fear of failure."
+			}, {
+				"author": "Mark Twain",
+				"quote": "Comparison is the thief of joy."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "A horse that can count to ten is a remarkable horse—not a remarkable mathematician."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "We can afford to lose money - even a lot of money. But we can't afford to lose reputation - even a shred of reputation."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "If you get in a lousy business, get out of it."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "If you don't find a way to make money while you sleep, you will work until you die."
+			}, {
+				"author": "Charlie Munger",
+				"quote": "Invest in a business any fool can run, because someday a fool will."
+			}, {
+				"author": "Charlie Munger",
+				"quote": "Why should it be easy to get rich?"
+			}, {
+				"author": "Naval",
+				"quote": "Desire is a contract that you make with yourself to be unhappy until you get what you want."
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "To become a philosopher king, start with being a king, not being a philosopher"
+			}, {
+				"author": "Mohnish Pabrai",
+				"quote": "Dhandho. Heads I win; Tails I don’t lose much"
+			}, {
+				"author": "Mohnish Pabrai",
+				"quote": "The single biggest advantage a value investor has is not IQ. It’s patience and waiting. Waiting for the right pitch, and waiting for many years for the right pitch."
+			}, {
+				"author": "Mohnish Pabrai",
+				"quote": "The good news in investing is there are no HR problems. If there are no humans, there are no problems!"
+			}, {
+				"author": "Mohnish Pabrai",
+				"quote": "You don’t make money when you buy stocks. And you don’t make money when you sell stocks. You make money by waiting."
+			}, {
+				"author": "Mohnish Pabrai",
+				"quote": "Minimizing downside risk while maximizing the upside is a powerful concept."
+			}, {
+				"author": "Mohnish Pabrai",
+				"quote": "The driver for me is not to get wealthy, the driver is to win the game."
+			}, {
+				"author": "Mohnish Pabrai",
+				"quote": "I’m a shameless copycat. Everything in my life is cloned… I have no original ideas."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "Rule No. 1 is never lose money. Rule No. 2 is never forget Rule No. 1"
+			}, {
+				"author": "Warren Buffett",
+				"quote": "If you aren’t willing to own a stock for 10 years, don’t even think about owning it for 10 minutes."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "The most important quality for an investor is temperament, not intellect"
+			}, {
+				"author": "Warren Buffett",
+				"quote": "Risk comes from not knowing what you are doing."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "Never invest in a business you cannot understand."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "The most important investment you can make is in yourself."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "Be fearful when others are greedy. Be greedy when others are fearful."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "We never want to count on the kindness of strangers in order to meet tomorrow’s obligations. When forced to choose, I will not trade even a night’s sleep for the chance of extra profits."
+			}, {
+				"author": "Warren Buffett",
+				"quote": "Forecasts may tell you a great deal about the forecaster; they tell you nothing about the future."
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "What fools call “wasting time” is most often the best investment."
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "The three most harmful addictions are heroin, carbohydrates, and a monthly salary."
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "Missing a train is only painful if you run after it! Likewise, not matching the idea of success others expect from you is only painful if that’s what you are seeking."
+			}, {
+				"author": "Gerd Gigerenzer",
+				"quote": "Never ask the doctor what you should do. Ask him what he would do if he were in your place. You would be surprised at the difference"
+			}, {
+				"author": "Jerzy Gregorek",
+				"quote": "Hard choices, easy life. Easy choices, hard life."
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "Few understand that procrastination is our natural defense, letting things take care of themselves and exercise their antifragility; it results from some ecological or naturalistic wisdom, and is not always bad -- at an existential level, it is my body rebelling against its entrapment. It is my soul fighting the Procrustean bed of modernity."
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "What I learned on my own I still remember"
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "They will envy you for your success, your wealth, for your intelligence, for your looks, for your status - but rarely for your wisdom."
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "Things always become obvious after the fact"
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "Difficulty is what wakes up the genius"
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "Do not treat others the way you would not like them to treat you."
+			}, {
+				"author": "Nassim Taleb",
+				"quote": "The minute I was bored with a book or a subject I moved to another one, instead of giving up on reading altogether - when you are limited to the school material and you get bored, you have a tendency to give up and do nothing or play hooky out of discouragement. The trick is to be bored with a specific book, rather than with the act of reading. So the number of the pages absorbed could grow faster than otherwise. And you find gold, so to speak, effortlessly, just as in rational but undirected trial-and-error-based research. It is exactly like options, trial and error, not getting stuck, bifurcating when necessary but keeping a sense of broad freedom and opportunism. Trial and error is freedom."
+			}, {
+				"author": "Marcus Aurelius",
+				"quote": "You have power over your mind - not outside events. Realize this, and you will find strength."
+			}, {
+				"author": "Marcus Aurelius",
+				"quote": "The happiness of your life depends upon the quality of your thoughts."
+			}, {
+				"author": "Marcus Aurelius",
+				"quote": "Everything we hear is an opinion, not a fact. Everything we see is a perspective, not the truth."
+			}, {
+				"author": "Marcus Aurelius",
+				"quote": "Waste no more time arguing about what a good man should be. Be one."
+			}, {
+				"author": "Marcus Aurelius",
+				"quote": "When you arise in the morning think of what a privilege it is to be alive, to think, to enjoy, to love ..."
+			}, {
+				"author": "Marcus Aurelius",
+				"quote": "The best revenge is to be unlike him who performed the injury."
+			}, {
+				"author": "Marcus Aurelius",
+				"quote": "It is not death that a man should fear, but he should fear never beginning to live."
+			}, {
+				"author": "Benjamin Franklin",
+				"quote": "Many People Die at Twenty-Five and Aren’t Buried Until They Are Seventy-Five"
+			}, {
+				"author": "General George S. Patton",
+				"quote": "Lead, Follow, or get out of the Way!"
+			}, {
+				"author": "Andrew Grove",
+				"quote": "Only the Paranoid Survive"
+			}, {
+				"author": "Confucius",
+				"quote": "A healthy man wants a thousand things, a sick man only wants one."
+			}, {
+				"author": "Goggins",
+				"quote": "Don't stop when you're tired. Stop when you're done."
+			}, {
+				"author": "Goggins",
+				"quote": "The most important conversations you’ll ever have are the ones you’ll have with yourself."
+			}, {
+				"author": "Goggins",
+				"quote": "Most wars are won or lost in our own heads."
+			}, {
+				"author": "Goggins",
+				"quote": "You are in danger of living a life so comfortable and soft that you will die without ever realizing your true potential"
+			}, {
+				"author": "Goggins",
+				"quote": "Pain unlocks a secret doorway in the mind, one that leads to both peak performance and beautiful silence."
+			}, {
+				"author": "Charlie Munger",
+				"quote": "Invert, Always Invert"
+			}, {
+				"author": "Albert Einstein",
+				"quote": "Your Imagination Is A Preview Of Things To Come"
+			}, {
+				"author": "Milton Friedman",
+				"quote": "Nothing is so permanent as a temporary government program."
+			}, {
+				"author": "Sun Tzu",
+				"quote": "Know thy self, know thy enemy. A thousand battles, a thousand victories."
+			}, {
+				"author": "Sun Tzu",
+				"quote": "If you know the enemy and know yourself you need not fear the results of a hundred battles."
+			}, {
+				"author": "Oscar Wilde",
+				"quote": "The public have an insatiable curiosity to know everything, except what is worth knowing."
+			}, {
+				"author": "Upanishads",
+				"quote": "Your deepest desire is your destiny"
+			}, {
+				"author": "Peter Thiel",
+				"quote": "Competition is for Losers"
+			}, {
+				"author": "Peter Thiel",
+				"quote": "Courage is in even shorter supply than genius"
+			}, {
+				"author": "Charlie Munger",
+				"quote": "Envy Makes the World Go Round"
+			}, {
+				"author": "Andy Frisella",
+				"quote": "Win the day"
+			}, {
+				"author": "Andy Frisella",
+				"quote": "Inside every self-made man is a poor kid that followed his dreams"
+			}, {
+				"author": "Betty Friedan",
+				"quote": "You can have it all, just not all at the same time."
+			}, ];
+			const random = Math.floor(Math.random() * quotes_array.length);
+			var random_quote = quotes_array[random]
+			$("#quote-text").empty().append(random_quote['quote']);
+			$("#quote-author").empty().append(random_quote['author']);
+			$(document).ready(function() {
+				$('.counter').each(function() {
+					$(this).prop('Counter', 0).animate({
+						Counter: $(this).text()
+					}, {
+						duration: 2000,
+						easing: 'swing',
+						step: function(now) {
+							var x = Math.round((now + Number.EPSILON) * 100) / 100
+							$(this).text(x);
+						}
+					});
+				});
+				NProgress.configure({
+					showSpinner: false,
+					ease: 'ease',
+					speed: 500,
+					trickle: true
+				});
+				NProgress.set((completed_days / total_days));
+			});
+		</script>
+	</body>
+</html>
